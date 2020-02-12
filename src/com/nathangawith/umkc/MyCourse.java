@@ -21,6 +21,11 @@ public class MyCourse {
 	public MyRoom getRoom() { return _room; }
 	public MyInstructor getInstructor() { return _instructor; }
 	public MyTimeSlot getTimeSlot() { return _timeSlot; }
+	// public setters
+	public void setClasss(MyClass val) { this._class = val; }
+	public void setRoom(MyRoom val) { this._room = val; }
+	public void setInstructor(MyInstructor val) { this._instructor = val; }
+	public void setTimeSlot(MyTimeSlot val) { this._timeSlot = val; }
 	
 	// constructor
 	public MyCourse(MyClass c, MyRoom r, MyInstructor i, MyTimeSlot t) {

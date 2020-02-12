@@ -11,11 +11,37 @@ import com.nathangawith.umkc.MyEnums.MyInstructor;
 import com.nathangawith.umkc.MyEnums.MyRoom;
 
 public class MySchedule {
-	
+
 	private Collection<MyCourse> _courses;
+	public Collection<MyCourse> getCourses() {
+		Collection<MyCourse> result = new ArrayList<MyCourse>();
+		for (MyCourse course : _courses )
+			result.add(new MyCourse(
+				course.getClasss(),
+				course.getRoom(),
+				course.getInstructor(),
+				course.getTimeSlot()));
+		return result;
+	}
 
 	public MySchedule(Collection<MyCourse> courses) {
 		_courses = courses;
+	}
+	
+	public void print() {
+		StringBuilder sb = new StringBuilder("[");
+		for (MyCourse course : _courses) {
+			sb.append("{");
+			sb.append(String.format("\"class\": \"%s\",", course.getClasss()));
+			sb.append(String.format("\"room\": \"%s\",", course.getRoom()));
+			sb.append(String.format("\"instructor\": \"%s\",", course.getInstructor()));
+			sb.append(String.format("\"time\": \"%s\"", course.getTimeSlot()));
+			sb.append("},");
+		}
+		sb.replace(sb.length() - 1, sb.length(), "");
+		sb.append("]");
+		System.out.println(sb.toString());
+		System.out.println("Energy: " + this.getEnergy());
 	}
 
 	/**
