@@ -16,13 +16,14 @@ public class AI {
 	private MyTimeSlot[] allTimeSlots = MyTimeSlot.values();
 
 	private Random random = new Random();
-	private double t_max = 1;
+	private double t_max = 0.5;
 //	private float t_min = 1f;
 	private float t_delta = 0.95f;
 
 	public AI() {
 		long start = System.currentTimeMillis();
 		// Simulated Annealing
+		int resets = 0;
 		int changes = 0;
 		int attempts = 0;
 		int successfullAttempts = 0;
@@ -40,7 +41,6 @@ public class AI {
 			float rand = random.nextFloat();
 			attempts++;
 			if (e_delta >= 0) {
-				schedule.print();
 				schedule = next;
 				successfullAttempts++;
 				changes++;
@@ -49,25 +49,34 @@ public class AI {
 				schedule = next;
 				changes++;
 			}
+			schedule.print();
 			
 			int nrg = schedule.getEnergy();
-			if (nrg > bestScore) bestSchedule = new MySchedule(schedule.getCourses());
+			if (nrg > bestScore) {
+				bestSchedule = new MySchedule(schedule.getCourses());
+				bestScore = nrg;
+			}
 
 			System.out.printf("\n%d, %d, %d", e_s, e_n, e_delta);
 			System.out.printf(str, t, e_s, prob, rand);
 			if (attempts % 4000 == 0 || successfullAttempts % 400 == 0) {
-				if (changes == 0) break;
+				if (changes == 0 && resets != 0) break;
 				t *= t_delta;
 				changes = 0;
 				attempts = 0;
 				successfullAttempts = 0;
+				resets++;
 			}
 		}
-		this.printResult("Best:", bestSchedule);
-		this.printResult("Final Schedule:", schedule);
-		System.out.println();
-		long now = System.currentTimeMillis();
-		System.out.printf("Ran for %f seconds\n", (now - start) / 1000f);
+//		if (bestSchedule.getEnergy() > 100) {
+			this.printResult("Best:", bestSchedule);
+			this.printResult("Final Schedule:", schedule);
+			System.out.println();
+			long now = System.currentTimeMillis();
+			System.out.printf("Ran for %f seconds\n", (now - start) / 1000f);	
+//		} else {
+//			new AI();
+//		}
 	}
 	
 	private void printResult(String label, MySchedule s) {

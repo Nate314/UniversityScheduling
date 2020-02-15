@@ -167,7 +167,8 @@ public class MySchedule {
 		int mitchellClassCount = instructorClassCounts.get(MyInstructor.MITCHELL);
 		int hareClassCount = instructorClassCounts.get(MyInstructor.HARE);
 		int binghamClassCount = instructorClassCounts.get(MyInstructor.BINGHAM);
-		if (raoClassCount + mitchellClassCount > hareClassCount + binghamClassCount) result -= 10;
+		if (raoClassCount > hareClassCount || raoClassCount > binghamClassCount) result -= 10;
+		if (mitchellClassCount > hareClassCount || mitchellClassCount > binghamClassCount) result -= 10;
 		
 		return result;
 	}
