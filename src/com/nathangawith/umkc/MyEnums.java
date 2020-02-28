@@ -26,7 +26,7 @@ public class MyEnums {
      */
     public static enum MyRoom {
         HAAG301, HAAG206, ROYALL204, KATZ209,
-        FLARSHEIM310, FLARSHEIM260, BLOCH0009
+        FLAR310, FLAR260, BLOCH0009
     }
 
     /**

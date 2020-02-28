@@ -33,8 +33,8 @@ public class MyUtility {
     public static boolean areInSameBuilding(MyRoom r1, MyRoom r2) {
     	if (r1 == MyRoom.HAAG206 || r1 == MyRoom.HAAG301) {
     		return r2 == MyRoom.HAAG206 || r2 == MyRoom.HAAG301;
-    	} else if (r1 == MyRoom.FLARSHEIM260 || r1 == MyRoom.FLARSHEIM310) {
-    		return r2 == MyRoom.FLARSHEIM260 || r2 == MyRoom.FLARSHEIM310;
+    	} else if (r1 == MyRoom.FLAR260 || r1 == MyRoom.FLAR310) {
+    		return r2 == MyRoom.FLAR260 || r2 == MyRoom.FLAR310;
     	} else {
     		return false;
     	}
@@ -110,8 +110,8 @@ public class MyUtility {
         map.put(MyRoom.HAAG206, 30);
         map.put(MyRoom.ROYALL204, 70);
         map.put(MyRoom.KATZ209, 50);
-        map.put(MyRoom.FLARSHEIM310, 80);
-        map.put(MyRoom.FLARSHEIM260, 25);
+        map.put(MyRoom.FLAR310, 80);
+        map.put(MyRoom.FLAR260, 25);
         map.put(MyRoom.BLOCH0009, 30);
         return map.get(x);
     }

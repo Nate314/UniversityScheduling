@@ -34,6 +34,8 @@ public class MySchedule {
 			sb.append("{");
 			sb.append(String.format("\"class\": \"%s\",", course.getClasss()));
 			sb.append(String.format("\"room\": \"%s\",", course.getRoom()));
+			sb.append(String.format("\"rcap\": \"%s\",", MyUtility.getCapacity(course.getRoom())));
+			sb.append(String.format("\"ccap\": \"%s\",", MyUtility.getCapacity(course.getClasss())));
 			sb.append(String.format("\"instructor\": \"%s\",", course.getInstructor()));
 			sb.append(String.format("\"time\": \"%s\"", course.getTimeSlot()));
 			sb.append("},");
@@ -150,7 +152,7 @@ public class MySchedule {
 			if (MyUtility.getCapacity(course.getRoom()) > MyUtility.getCapacity(course.getClasss())) result += 5;
 			
 			// Room capacity is no more than twice the expected enrollment: +2
-			if (MyUtility.getCapacity(course.getRoom()) >  2 * MyUtility.getCapacity(course.getClasss())) result += 2;
+			if (MyUtility.getCapacity(course.getRoom()) < 2 * MyUtility.getCapacity(course.getClasss())) result += 2;
 			
 			// general counts
 			instructorClassCounts.put(course.getInstructor(), instructorClassCounts.get(course.getInstructor()) + 1);

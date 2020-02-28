@@ -17,22 +17,17 @@ public class AI {
 
 	private Random random = new Random();
 	private double t_max = 0.5;
-//	private float t_min = 1f;
 	private float t_delta = 0.95f;
 
 	public AI() {
 		long start = System.currentTimeMillis();
-		// Simulated Annealing
-		int resets = 0;
-		int changes = 0;
-		int attempts = 0;
-		int successfullAttempts = 0;
+		int resets = 0, changes = 0, attempts = 0, successfullAttempts = 0, bestScore = 0;
 		MySchedule bestSchedule = null;
-		int bestScore = 0;
 		MySchedule schedule = this.getRandomInitialSchedule();
 		String str = "\rTemperature: %f, Energy: %d, Prob: %f > %f";
 		double t = t_max;
 		for (;;) {
+			// <Simulated Annealing>
 			int e_s = schedule.getEnergy();
 			MySchedule next = this.radomlyMutate(schedule);
 			int e_n = next.getEnergy();
@@ -42,41 +37,34 @@ public class AI {
 			attempts++;
 			if (e_delta >= 0) {
 				schedule = next;
-				successfullAttempts++;
-				changes++;
+				successfullAttempts++; changes++;
 			}
 			else if (prob > rand) {
 				schedule = next;
 				changes++;
 			}
 			schedule.print();
-			
+			// </Simulated Annealing>
+
+			// <Assignment Specific Temp Changes>
 			int nrg = schedule.getEnergy();
 			if (nrg > bestScore) {
 				bestSchedule = new MySchedule(schedule.getCourses());
 				bestScore = nrg;
 			}
-
-			System.out.printf("\n%d, %d, %d", e_s, e_n, e_delta);
-			System.out.printf(str, t, e_s, prob, rand);
+			System.out.printf("\n%d, %d, %d" + str, e_s, e_n, e_delta, t, e_s, prob, rand);
 			if (attempts % 4000 == 0 || successfullAttempts % 400 == 0) {
 				if (changes == 0 && resets != 0) break;
-				t *= t_delta;
-				changes = 0;
-				attempts = 0;
-				successfullAttempts = 0;
-				resets++;
+				changes = 0; attempts = 0; successfullAttempts = 0;
+				t *= t_delta; resets++;
 			}
+			// </Assignment Specific Temp Changes>
 		}
-//		if (bestSchedule.getEnergy() > 100) {
-			this.printResult("Best:", bestSchedule);
-			this.printResult("Final Schedule:", schedule);
-			System.out.println();
-			long now = System.currentTimeMillis();
-			System.out.printf("Ran for %f seconds\n", (now - start) / 1000f);	
-//		} else {
-//			new AI();
-//		}
+		this.printResult("Best:", bestSchedule);
+		this.printResult("Final Schedule:", schedule);
+		System.out.println();
+		long now = System.currentTimeMillis();
+		System.out.printf("Ran for %f seconds\n", (now - start) / 1000f);	
 	}
 	
 	private void printResult(String label, MySchedule s) {
